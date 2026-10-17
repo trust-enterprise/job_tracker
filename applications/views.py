@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import JobApplicationForm
 from .models import JobApplication
+from django.views.decorators.http import require_POST
 
 # Create your views here.
 def home(request):
@@ -12,6 +13,8 @@ def home(request):
             return redirect('home')
     else:
         form = JobApplicationForm()
+
+    application_status = request.GET.get()
 
     job_applications = JobApplication.objects.all()
 
@@ -39,3 +42,9 @@ def edit_application(request, application_id):
         'job_applications': job_applications,
         'form':form
     })
+
+@require_POST
+def delete_application(request, application_id):
+    application = get_object_or_404(JobApplication, id = application_id)
+    application.delete()
+    return redirect('home')

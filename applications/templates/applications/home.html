@@ -24,6 +24,12 @@
     {%for application in job_applications%}
         {{application.company}} - {{application.job_title}} - {{application.status}} - {{application.applied_date}}
         <a href="{% url 'edit' application.id %}">Edit</a>
+        <form method="POST" 
+            action="{% url 'delete' application.id %}"
+            onsubmit="return confirm('Sure to delete?')">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+        </form>
     {%empty%}
     <p>No applications</p>
     {% endfor %}
