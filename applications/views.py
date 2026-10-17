@@ -35,7 +35,7 @@ def edit_application(request, application_id):
 
     job_applications = JobApplication.objects.all()
     
-    return render(request, 'applications/home.html', {
+    return render(request, 'applications/edit.html', {
         'job_applications': job_applications,
         'form':form
     })
