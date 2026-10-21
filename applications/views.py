@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import JobApplicationForm
 from .models import JobApplication
-from django.views.decorators.http import require_POST
-
+from django.views.decorators.http import require_POST 
 # Create your views here.
 def home(request):
     if request.method == 'POST':
@@ -14,14 +13,18 @@ def home(request):
     else:
         form = JobApplicationForm()
 
-    application_status = request.GET.get()
-
     job_applications = JobApplication.objects.all()
+    
+    application_status = request.GET.get('status','') 
+    if application_status:
+        job_applications = JobApplication.objects.filter(status=application_status) 
+
 
     return render(request, 'applications/home.html',
                   {
                       'job_applications': job_applications,
-                      'form':form
+                      'form':form,
+                      'application_status': application_status,
                   }
                   )
 

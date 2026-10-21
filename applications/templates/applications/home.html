@@ -21,6 +21,21 @@
     </form>
     <br> <hr>
 
+    <form method="GET">
+        <select name="status">
+            <option value="" {% if application_status == '' %}selected{% endif %}>All Categories</option>
+
+            <option value="applied" {% if application_status == 'applied' %}selected{% endif %}>Applied</option>
+
+            <option value="interviewed" {% if application_status == 'interviewed' %}selected{% endif %}>Interviewed</option>
+
+            <option value="rejected" {% if application_status == 'rejected' %}selected{% endif %}>Rejected</option>
+
+            <option value="selected" {% if application_status == 'selected' %}selected{% endif %}>Selected</option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+    <br><br>
     {%for application in job_applications%}
         {{application.company}} - {{application.job_title}} - {{application.status}} - {{application.applied_date}}
         <a href="{% url 'edit' application.id %}">Edit</a>
